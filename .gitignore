@@ -1,0 +1,11 @@
+.next/
+node_modules/
+out/
+.env*.local
+__pycache__/
+*.pyc
+*.bat
+*.txt
+data/faq_repo/
+Thumbs.db
+.DS_Store
