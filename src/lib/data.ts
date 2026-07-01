@@ -1,10 +1,12 @@
 import fs from "fs"
 import path from "path"
-import type { School, FaqSchool, SearchIndex } from "./types"
+import type { School, FaqSchool, SearchIndex, SchoolIndices, IndexRange } from "./types"
 
 let _schools: School[] | null = null
 let _faq: FaqSchool[] | null = null
 let _searchIndex: SearchIndex[] | null = null
+let _schoolIndices: Record<string, SchoolIndices> | null = null
+let _schoolRanges: Record<string, Partial<Record<keyof SchoolIndices, IndexRange>>> | null = null
 let _faqByName: Map<string, FaqSchool> | null = null
 
 const dataDir = path.join(process.cwd(), "data")
@@ -27,6 +29,21 @@ export function loadFaq(): FaqSchool[] {
   return _faq!
 }
 
+export function loadSchoolIndices(): Record<string, SchoolIndices> {
+  if (!_schoolIndices) {
+    const raw: Record<string, { name: string; indices: SchoolIndices; ranges?: Record<string, IndexRange> }> = JSON.parse(
+      fs.readFileSync(path.join(dataDir, "school_indices.json"), "utf-8")
+    )
+    _schoolIndices = {}
+    _schoolRanges = {}
+    for (const [sid, school] of Object.entries(raw)) {
+      _schoolIndices[sid] = school.indices
+      _schoolRanges[sid] = (school.ranges as Record<string, IndexRange>) || {}
+    }
+  }
+  return _schoolIndices!
+}
+
 export function loadSearchIndex(): SearchIndex[] {
   if (!_searchIndex) {
     _searchIndex = JSON.parse(
@@ -34,6 +51,16 @@ export function loadSearchIndex(): SearchIndex[] {
     )
   }
   return _searchIndex!
+}
+
+export function loadSearchIndexWithIndices(): SearchIndex[] {
+  const idx = loadSearchIndex()
+  const indices = loadSchoolIndices()
+  return idx.map((s) => ({
+    ...s,
+    indices: indices[s.id] || undefined,
+    ranges: (_schoolRanges && _schoolRanges[s.id]) || undefined,
+  }))
 }
 
 export function getSchoolById(id: string): School | undefined {

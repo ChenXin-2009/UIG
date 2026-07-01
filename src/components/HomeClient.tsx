@@ -2,7 +2,8 @@
 
 import { useState, useMemo, useEffect, useRef, useCallback } from "react"
 import { PROVINCES } from "@/lib/constants"
-import type { SearchIndex } from "@/lib/types"
+import type { SearchIndex, SchoolIndices } from "@/lib/types"
+import { INDEX_META } from "@/lib/types"
 import SchoolCard from "@/components/SchoolCard"
 
 const BATCH = 50
@@ -17,6 +18,14 @@ const COLUMNS = [
   { key: "211", label: "211", getValue: (s: SearchIndex) => s.tags.includes("211") ? 1 : 0 },
   { key: "双一流", label: "双一流", getValue: (s: SearchIndex) => s.tags.includes("双一流") ? 1 : 0 },
   { key: "type", label: "类型", getValue: (s: SearchIndex) => s.tags.includes("公办") ? "公办" : s.tags.includes("民办") ? "民办" : "-" },
+  ...INDEX_META.map((m) => ({
+    key: m.key,
+    label: m.label,
+    getValue: (s: SearchIndex) => {
+      const v = s.indices?.[m.key]
+      return v !== undefined && v !== null ? v : null
+    },
+  })),
 ]
 
 function compare(a: SearchIndex, b: SearchIndex, key: string): number {
@@ -156,15 +165,16 @@ export default function HomeClient({ schools }: { schools: SearchIndex[] }) {
 
         <div className="table-wrap">
           <table className="school-table">
-            <thead>
+            <thead className="sticky-shadow">
               <tr>
                 {COLUMNS.map((col) => {
                   const s = sorts.find((s) => s.key === col.key)
                   const pri = s ? sorts.indexOf(s) + 1 : 0
+                  const isIdx = col.key === "air_con" || col.key === "bed_type" || INDEX_META.some((m) => m.key === col.key)
                   return (
-                    <th key={col.key} onClick={() => toggleSort(col.key)} className="sortable">
+                    <th key={col.key} onClick={() => toggleSort(col.key)} className={"sortable" + (isIdx ? " idx-header" : "")}>
                       <span>{col.label}</span>
-                      <span className="sort-indicator">
+                      <span className={"sort-indicator" + (s ? " " + s.dir : "")}>
                         {s ? (s.dir === "asc" ? "▲" : "▼") : ""}
                         {pri > 1 && <sup>{pri}</sup>}
                       </span>

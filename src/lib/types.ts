@@ -119,6 +119,34 @@ export interface TypeInfo {
   type_name: string
 }
 
+export interface SchoolIndices {
+  bed_type?: number
+  air_con?: number
+  bathroom?: number
+  self_study?: number
+  morning_run?: number
+  running_km?: number
+  holiday?: number
+  delivery?: number
+  traffic?: number
+  washer?: number
+  internet?: number
+  power_cut?: number
+  canteen?: number
+  hot_water?: number
+  ebike?: number
+  power_limit?: number
+  night_study?: number
+  laptop?: number
+  access?: number
+  inspection?: number
+}
+
+export interface IndexRange {
+  min: number
+  max: number
+}
+
 export interface SearchIndex {
   id: string
   name: string
@@ -128,7 +156,32 @@ export interface SearchIndex {
   tags: string[]
   ruanke: string
   min_score: string
+  indices?: SchoolIndices
+  ranges?: Partial<Record<keyof SchoolIndices, IndexRange>>
 }
+
+export const INDEX_META: { key: keyof SchoolIndices; label: string; unit: string; type: "score" | "numeric" }[] = [
+  { key: "air_con", label: "空调", unit: "", type: "score" },
+  { key: "bed_type", label: "上床下桌", unit: "", type: "score" },
+  { key: "bathroom", label: "独立卫浴", unit: "", type: "score" },
+  { key: "self_study", label: "无早自习", unit: "", type: "score" },
+  { key: "morning_run", label: "无晨跑", unit: "", type: "score" },
+  { key: "running_km", label: "跑步", unit: "km", type: "numeric" },
+  { key: "holiday", label: "假期", unit: "天", type: "numeric" },
+  { key: "delivery", label: "外卖", unit: "", type: "score" },
+  { key: "traffic", label: "交通", unit: "", type: "score" },
+  { key: "washer", label: "洗衣机", unit: "", type: "score" },
+  { key: "internet", label: "校园网", unit: "", type: "score" },
+  { key: "power_cut", label: "不断电", unit: "", type: "score" },
+  { key: "canteen", label: "食堂", unit: "", type: "score" },
+  { key: "hot_water", label: "热水", unit: "h", type: "numeric" },
+  { key: "ebike", label: "电瓶车", unit: "", type: "score" },
+  { key: "night_study", label: "通宵自习", unit: "", type: "score" },
+  { key: "laptop", label: "带电脑", unit: "", type: "score" },
+  { key: "access", label: "门禁", unit: "", type: "score" },
+  { key: "inspection", label: "查寝", unit: "", type: "score" },
+  { key: "power_limit", label: "限电", unit: "W", type: "numeric" },
+]
 
 export interface FilterOptions {
   provinces: ProvinceInfo[]

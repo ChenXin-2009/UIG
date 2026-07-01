@@ -9,3 +9,12 @@ __pycache__/
 data/faq_repo/
 Thumbs.db
 .DS_Store
+
+# Pipeline temp output
+pipeline_output/
+
+# Crawler intermediate files
+crawler/__pycache__/
+
+# Build artifacts
+tsconfig.tsbuildinfo
