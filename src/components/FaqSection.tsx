@@ -3,6 +3,10 @@
 import { useState } from "react"
 import type { FaqSchool } from "@/lib/types"
 
+/**
+ * FAQ 手风琴组件
+ * 展示校园生活质量相关的问答数据，支持展开/折叠
+ */
 export default function FaqSection({ faq }: { faq: FaqSchool }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
 
@@ -12,6 +16,7 @@ export default function FaqSection({ faq }: { faq: FaqSchool }) {
 
   return (
     <div>
+      <div className="faq-disclaimer">非实时问答数据，学校政策可能改变，仅供参考</div>
       {faq.answers.map((item, i) => (
         <div key={i} className="faq-item">
           <div

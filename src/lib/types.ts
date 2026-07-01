@@ -1,3 +1,4 @@
+/** 学校基础信息 */
 export interface School {
   id: string
   code: string
@@ -45,6 +46,7 @@ export interface School {
   pro_type: Record<string, string[]>
 }
 
+/** 学校特色专业 */
 export interface SchoolSpecial {
   special_id: string
   special_name: string
@@ -54,6 +56,7 @@ export interface SchoolSpecial {
   province_feature: string
 }
 
+/** 省份最低投档线 */
 export interface ProvinceScoreMin {
   province_id: string
   type: string
@@ -61,11 +64,13 @@ export interface ProvinceScoreMin {
   year: string
 }
 
+/** 分科类最低分 */
 export interface ProTypeMinItem {
   year: number
   type: Record<string, string>
 }
 
+/** 录取分数线记录 */
 export interface ScoreRecord {
   school_id: string
   school_name: string
@@ -86,39 +91,50 @@ export interface ScoreRecord {
   info: string
 }
 
+/** 学校 FAQ 数据 */
 export interface FaqSchool {
   id: string
   name: string
   answers: FaqAnswer[]
 }
 
+/** 单个 FAQ 问题及答案列表 */
 export interface FaqAnswer {
   question: string
   question_short: string
   answers: FaqResponse[]
 }
 
+/** 单条回答 */
 export interface FaqResponse {
   user: string
   year: number
   answer: string
 }
 
+/** 省份信息 */
 export interface ProvinceInfo {
   province_id: string
   province_name: string
 }
 
+/** 录取批次信息 */
 export interface BatchInfo {
   batch_id: string
   batch_name: string
 }
 
+/** 科类信息 */
 export interface TypeInfo {
   type_id: string
   type_name: string
 }
 
+/**
+ * 校园生活质量指数（20 项）
+ * - score 类型: 0-100 分
+ * - numeric 类型: 实际数值（如 km、小时、W）
+ */
 export interface SchoolIndices {
   bed_type?: number
   air_con?: number
@@ -142,11 +158,13 @@ export interface SchoolIndices {
   inspection?: number
 }
 
+/** 数值型指标的取值范围 */
 export interface IndexRange {
   min: number
   max: number
 }
 
+/** 搜索索引条目 */
 export interface SearchIndex {
   id: string
   name: string
@@ -160,6 +178,7 @@ export interface SearchIndex {
   ranges?: Partial<Record<keyof SchoolIndices, IndexRange>>
 }
 
+/** 20 项生活质量指标的元数据定义 */
 export const INDEX_META: { key: keyof SchoolIndices; label: string; unit: string; type: "score" | "numeric" }[] = [
   { key: "air_con", label: "空调", unit: "", type: "score" },
   { key: "bed_type", label: "上床下桌", unit: "", type: "score" },
@@ -183,18 +202,21 @@ export const INDEX_META: { key: keyof SchoolIndices; label: string; unit: string
   { key: "power_limit", label: "限电", unit: "W", type: "numeric" },
 ]
 
+/** 筛选选项 */
 export interface FilterOptions {
   provinces: ProvinceInfo[]
   batches: BatchInfo[]
   types: TypeInfo[]
 }
 
+/** 学校层次映射 */
 export const SCHOOL_LEVELS: Record<string, string> = {
   "2001": "本科",
   "2002": "专科（高职）",
   "2003": "成人高校",
 }
 
+/** 学校类型映射 */
 export const SCHOOL_TYPES: Record<string, string> = {
   "5001": "理工类",
   "5002": "综合类",
@@ -211,6 +233,7 @@ export const SCHOOL_TYPES: Record<string, string> = {
   "5013": "其他",
 }
 
+/** 办学性质映射 */
 export const SCHOOL_NATURES: Record<string, string> = {
   "36000": "公办",
   "36001": "民办",

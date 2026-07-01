@@ -1,14 +1,28 @@
+"use client"
+import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { TAG_COLORS } from "@/lib/constants"
 import type { SearchIndex } from "@/lib/types"
 import { INDEX_META } from "@/lib/types"
 
 const TAG_COLS = ["985", "211", "双一流"]
 
-export default function SchoolCard({ school }: { school: SearchIndex }) {
+export default function SchoolCard({ school, style }: { school: SearchIndex; style?: React.CSSProperties }) {
+  const router = useRouter()
   const has = (t: string) => school.tags.includes(t)
+  // 先尝试 CDN logo，失败后回退到本地 /logos/ 目录
+  const cdnUrl = `https://static-data.gaokao.cn/upload/logo/${school.id}.jpg`
+  const [logoFailed, setLogoFailed] = useState(false)
   return (
-    <tr onClick={() => window.location.href = `/school/${school.id}`}>
-      <td className="name-cell" style={{ fontWeight: 600 }}>{school.name}</td>
+    <tr onClick={() => router.push(`/school/${school.id}`)} style={style}>
+      <td className="name-cell first-col" style={{
+        fontWeight: 800,
+        fontSize: "1.1em",
+        background: `linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.8)), url(${logoFailed ? `/logos/${school.id}.jpg` : cdnUrl}) center center / 50% auto no-repeat`,
+      }}>
+        {!logoFailed && <img src={cdnUrl} onError={() => setLogoFailed(true)} style={{ display: "none" }} />}
+        {school.name}
+      </td>
       <td>{school.province}</td>
       <td>{school.level}</td>
       <td>{school.ruanke && school.ruanke !== "0" ? school.ruanke : '-'}</td>

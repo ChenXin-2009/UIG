@@ -1,4 +1,7 @@
-"""Full verification of pipeline output"""
+"""
+Pipeline 验证脚本
+- 验证规则匹配、LLM 批次、合并结果、分数范围各步骤的输出完整性
+"""
 import json, os, glob
 
 BASE = r'D:\BIAN\UIG\pipeline_output'

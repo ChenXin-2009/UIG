@@ -1,3 +1,9 @@
+"""
+Pipeline Step 2 (v2): 准备 LLM 批次
+- 加载 step1_unmatched.json 中待 LLM 打分的条目
+- 过滤掉旧批次中已处理过的条目
+- 每批打包若干条附带完整 FAQ 上下文的 prompt
+"""
 import json, os, math, sys
 sys.stdout = open(sys.stdout.fileno(), 'w', encoding='utf-8', buffering=1)
 

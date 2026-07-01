@@ -1,7 +1,13 @@
 import { NextRequest, NextResponse } from "next/server"
 
+/** 掌上高考分数线 API 地址 */
 const SCORE_API = "https://api.zjzw.cn/web/api/"
 
+/**
+ * 分数线代理 API
+ * 代理掌上高考的分数线查询接口，避免前端跨域问题
+ * 参数: school_id, province_id, year, type_id, batch_id, page
+ */
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)
   const school_id = searchParams.get("school_id")

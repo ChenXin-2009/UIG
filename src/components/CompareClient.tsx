@@ -3,6 +3,7 @@
 import { useState, Fragment } from "react"
 import { TAG_COLORS, PROVINCES, TYPE_LABELS } from "@/lib/constants"
 
+/** 对比页使用的精简学校信息 */
 interface CompactSchool {
   id: string; name: string; province_id: string; province_name: string
   level_name: string; nature_name: string; type_name: string; city_name: string
@@ -11,8 +12,13 @@ interface CompactSchool {
   province_score_min?: Record<string, { province_id: string; type: string; min: string; year: string }>
 }
 
+/** 搜索索引精简条目 */
 interface SearchItem { id: string; name: string; short: string }
 
+/**
+ * 学校对比客户端组件
+ * 支持最多 4 所学校并排对比基本信息、排名、录取分数
+ */
 export default function CompareClient({
   searchIndex, schoolsCompact,
 }: {
@@ -72,6 +78,7 @@ export default function CompareClient({
     { label: "软科排名", render: (s) => s.ruanke_rank || "-" },
     { label: "校友会排名", render: (s) => s.xyh_rank || "-" },
     { label: "QS世界排名", render: (s) => s.qs_world || "-" },
+    // 仅展示北京(11)、上海(31)、广东(44)三地最低分，其他省份数据在详情页查看
     { label: "最低分(北京)", render: (s) => provinceScore(s, "11") },
     { label: "最低分(上海)", render: (s) => provinceScore(s, "31") },
     { label: "最低分(广东)", render: (s) => provinceScore(s, "44") },
@@ -81,7 +88,7 @@ export default function CompareClient({
     <>
       <header className="header">
         <div className="container">
-          <h1>高考志愿助手</h1>
+          <img src="/logoL.png" alt="高考志愿助手" height="32" />
           <nav><a href="/">首页</a><a href="/compare">对比</a></nav>
         </div>
       </header>

@@ -1,3 +1,4 @@
+/** 学校不存在时的 404 页面 */
 export default function NotFound() {
   return (
     <main className="container" style={{ textAlign: "center", paddingTop: 80 }}>

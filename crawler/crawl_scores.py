@@ -33,7 +33,7 @@ PROVINCE_TYPES = {
 }
 
 BATCH_IDS = ["7", "6", "8", "25", "46", "51"]
-YEARS = [2024, 2025]
+YEARS = [2024, 2025]  # 爬取的年份范围，如需最新数据请更新
 
 session = requests.Session()
 session.headers.update(HEADERS)
