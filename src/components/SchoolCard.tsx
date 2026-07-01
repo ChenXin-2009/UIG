@@ -1,28 +1,25 @@
 import { TAG_COLORS } from "@/lib/constants"
 import type { SearchIndex } from "@/lib/types"
 
+const TAG_COLS = ["985", "211", "双一流"]
+
 export default function SchoolCard({ school }: { school: SearchIndex }) {
+  const has = (t: string) => school.tags.includes(t)
   return (
-    <a href={`/school/${school.id}`} className="card school-card">
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "start" }}>
-        <h3>{school.name}</h3>
-        {school.min_score && (
-          <div style={{ textAlign: "right", fontSize: 13, color: "#666", whiteSpace: "nowrap", marginLeft: 12 }}>
-            <div style={{ fontSize: 20, fontWeight: 700, color: "#1a73e8" }}>{school.min_score}</div>
-            <div style={{ fontSize: 11 }}>{school.province}最低</div>
-          </div>
-        )}
-      </div>
-      <div className="meta">
-        <span>{school.province}</span>
-        <span>{school.level}</span>
-        {school.ruanke && <span>软科: {school.ruanke}</span>}
-      </div>
-      <div>
-        {school.tags.map((t) => (
-          <span key={t} className="tag" style={{ backgroundColor: TAG_COLORS[t] || "#95a5a6" }}>{t}</span>
-        ))}
-      </div>
-    </a>
+    <tr onClick={() => window.location.href = `/school/${school.id}`}>
+      <td style={{ fontWeight: 600 }}>{school.name}</td>
+      <td>{school.province}</td>
+      <td>{school.level}</td>
+      <td>{school.ruanke && school.ruanke !== "0" ? school.ruanke : '-'}</td>
+      <td style={{ color: "#1a73e8", fontWeight: 700 }}>{school.min_score || '-'}</td>
+      {TAG_COLS.map((t) => (
+        <td key={t} style={has(t) ? { color: TAG_COLORS[t], fontWeight: 600 } : { color: "#ccc" }}>
+          {has(t) ? t : "-"}
+        </td>
+      ))}
+      <td style={has("公办") || has("民办") ? { color: has("公办") ? TAG_COLORS["公办"] : TAG_COLORS["民办"], fontWeight: 600 } : { color: "#ccc" }}>
+        {has("公办") ? "公办" : has("民办") ? "民办" : "-"}
+      </td>
+    </tr>
   )
 }

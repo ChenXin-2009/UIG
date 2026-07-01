@@ -71,14 +71,14 @@ export default function ScoreChart({ school }: { school: School }) {
         <div>
           <div style={{ fontSize: 12, color: "#888", marginBottom: 4 }}>省份</div>
           <select value={province} onChange={(e) => onProvinceChange(e.target.value)}
-            style={{ padding: "8px 12px", border: "1px solid #ddd", borderRadius: 6, fontSize: 14, background: "#fff" }}>
+            style={{ padding: "8px 12px", border: "1px solid #ddd", fontSize: 14, background: "#fff" }}>
             {PROVINCES.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}
           </select>
         </div>
         <div>
           <div style={{ fontSize: 12, color: "#888", marginBottom: 4 }}>年份</div>
           <select value={year} onChange={(e) => onYearChange(e.target.value)}
-            style={{ padding: "8px 12px", border: "1px solid #ddd", borderRadius: 6, fontSize: 14, background: "#fff" }}>
+            style={{ padding: "8px 12px", border: "1px solid #ddd", fontSize: 14, background: "#fff" }}>
             <option value="2025">2025</option>
             <option value="2024">2024</option>
             <option value="2023">2023</option>
@@ -88,7 +88,7 @@ export default function ScoreChart({ school }: { school: School }) {
           <div>
             <div style={{ fontSize: 12, color: "#888", marginBottom: 4 }}>科类</div>
             <select value={typeId} onChange={(e) => fetchScores(province, year, e.target.value)}
-              style={{ padding: "8px 12px", border: "1px solid #ddd", borderRadius: 6, fontSize: 14, background: "#fff" }}>
+              style={{ padding: "8px 12px", border: "1px solid #ddd", fontSize: 14, background: "#fff" }}>
               {allTypes.map((t) => <option key={t} value={t}>{TYPE_LABELS[t] || t}</option>)}
             </select>
           </div>
@@ -96,7 +96,7 @@ export default function ScoreChart({ school }: { school: School }) {
       </div>
 
       {overview && (
-        <div style={{ marginBottom: 16, padding: "12px 16px", background: "#e8f0fe", borderRadius: 8, fontSize: 14 }}>
+        <div style={{ marginBottom: 16, padding: "12px 16px", background: "#e8f0fe", fontSize: 14 }}>
           该省最低投档线：<strong>{overview.min}</strong> 分
           <span style={{ color: "#888" }}>（{overview.year}年，{TYPE_LABELS[overview.type] || overview.type}）</span>
         </div>
@@ -105,7 +105,7 @@ export default function ScoreChart({ school }: { school: School }) {
       {loading && <p className="loading">查询中...</p>}
 
       {error && (
-        <div style={{ padding: 16, color: "#e74c3c", background: "#fdf0ef", borderRadius: 8, marginBottom: 16, fontSize: 14 }}>
+        <div style={{ padding: 16, color: "#e74c3c", background: "#fdf0ef", marginBottom: 16, fontSize: 14 }}>
           {error}
         </div>
       )}

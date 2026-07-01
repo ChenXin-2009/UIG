@@ -103,9 +103,9 @@ export default function CompareClient({
                 <div style={{ position: "relative" }}>
                   <input type="text" placeholder={`学校 ${i + 1}...`} value={query[i]}
                     onChange={(e) => { const n = [...query]; n[i] = e.target.value; setQuery(n) }}
-                    style={{ width: "100%", padding: "8px 12px", border: "2px solid #ddd", borderRadius: 6, fontSize: 14 }} />
+                    style={{ width: "100%", padding: "8px 12px", border: "2px solid #ddd", fontSize: 14 }} />
                   {filtered(i).length > 0 && (
-                    <div style={{ position: "absolute", top: "100%", left: 0, right: 0, background: "#fff", border: "1px solid #ddd", borderRadius: 6, zIndex: 10, maxHeight: 300, overflowY: "auto" }}>
+                    <div style={{ position: "absolute", top: "100%", left: 0, right: 0, background: "#fff", border: "1px solid #ddd", zIndex: 10, maxHeight: 300, overflowY: "auto" }}>
                       {filtered(i).map((s) => (
                         <div key={s.id} onClick={() => selectSchool(i, s.id)}
                           style={{ padding: "8px 12px", cursor: "pointer", fontSize: 14, borderBottom: "1px solid #f0f0f0" }}
@@ -121,7 +121,7 @@ export default function CompareClient({
             </div>
           ))}
           {slots.length < 4 && (
-            <button onClick={addSlot} style={{ padding: "8px 16px", border: "2px dashed #ddd", borderRadius: 6, background: "#fff", cursor: "pointer", fontSize: 14, alignSelf: "flex-end" }}>
+            <button onClick={addSlot} style={{ padding: "8px 16px", border: "2px dashed #ddd", background: "#fff", cursor: "pointer", fontSize: 14, alignSelf: "flex-end" }}>
               + 添加学校
             </button>
           )}
