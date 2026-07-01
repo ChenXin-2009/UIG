@@ -34,17 +34,6 @@ const COLUMNS = [
   })),
 ]
 
-function compare(a: SearchIndex, b: SearchIndex, key: string): number {
-  const col = COLUMNS.find((c) => c.key === key)!
-  const va = col.getValue(a)
-  const vb = col.getValue(b)
-  if (va === null && vb === null) return 0
-  if (va === null) return 1
-  if (vb === null) return -1
-  if (typeof va === "number" && typeof vb === "number") return va - vb
-  return String(va).localeCompare(String(vb))
-}
-
 /**
  * 首页客户端组件
  * 功能：搜索、筛选、多列排序、无限滚动加载
@@ -83,7 +72,18 @@ export default function HomeClient({ schools }: { schools: SearchIndex[] }) {
     for (let i = sorts.length - 1; i >= 0; i--) {
       const { key, dir } = sorts[i]
       items.sort((a, b) => {
-        const cmp = compare(a, b, key)
+        const col = COLUMNS.find((c) => c.key === key)!
+        const va = col.getValue(a)
+        const vb = col.getValue(b)
+        const aNil = va === null || va === "-"
+        const bNil = vb === null || vb === "-"
+        if (aNil && bNil) return 0
+        if (aNil) return 1
+        if (bNil) return -1
+        if (typeof va === "number" && typeof vb === "number") {
+          return dir === "asc" ? va - vb : vb - va
+        }
+        const cmp = String(va).localeCompare(String(vb))
         return dir === "asc" ? cmp : -cmp
       })
     }
